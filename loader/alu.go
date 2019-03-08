@@ -3,7 +3,6 @@ package loader
 import (
 	"bufio"
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"io"
 	"math"
@@ -40,8 +39,7 @@ func (e *errReader) readBytes(numBytes int) ([]byte, error) {
 	var numBytesRead int
 	numBytesRead, e.err = e.Reader.Read(bytes)
 	if numBytes != numBytesRead {
-		errString := fmt.Sprintf("Expected to read %d bytes but acutally read %d", numBytes, numBytesRead)
-		e.err = errors.New(errString)
+		e.err = fmt.Errorf("Expected to read %d bytes but acutally read %d", numBytes, numBytesRead)
 		return nil, e.err
 	}
 	return bytes, e.err
@@ -61,7 +59,8 @@ func (e *errReader) readSegment() ([]byte, error) {
 	return segment, e.err
 }
 
-// ParseAlu reads an ALU file and returs an Alc structure
+// ParseAlu reads an ALU file and returs an Alu structure as defined
+// in https://www.multos.com/uploads/GALU.pdf
 func ParseAlu(filename string) (*Alu, error) {
 	file, err := os.Open(filename)
 	if err != nil {

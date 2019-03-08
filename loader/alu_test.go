@@ -31,7 +31,7 @@ func TestParseAlu(t *testing.T) {
 		{"Valid ALU", args{filename: "testfiles/sample.alu"}, &sampleAlu, false},
 		{"Missing data segment", args{filename: "testfiles/sample_missing_data_segment.alu"}, nil, true},
 		{"Incomplete code segment", args{filename: "testfiles/sample_incomplete_code_segment.alu"}, nil, true},
-		{"File does not exist", args{filename: "fileDoesNotExit"}, nil, true},
+		{"File does not exist", args{filename: "fileDoesNotExist"}, nil, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
